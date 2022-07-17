@@ -2,8 +2,9 @@
     "port": 8008,
     "routes": {
         "/": {
-            "status_code": 220,
-            "body": "Hello World!"
+            "status_code": 200,
+            "body": "{\"name\":\"ratanraj\"}",
+            "content_type": "application/json"
         }
     }
 }
