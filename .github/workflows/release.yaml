@@ -21,6 +21,6 @@ jobs:
       - uses: wangyoucao577/go-release-action@v1.20
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          project_path: "./cmd/gutenberg"
+          project_path: "./cmd/staticserver"
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
