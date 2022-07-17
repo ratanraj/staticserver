@@ -3,6 +3,7 @@ package staticserver
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -12,6 +13,7 @@ type Response struct {
 	StatusCode  int    `json:"status_code"`
 	Body        string `json:"body"`
 	ContentType string `json:"content_type"`
+	IsFile      bool   `json:"is_file"`
 }
 
 type Config struct {
@@ -26,7 +28,16 @@ func (c Config) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 				w.Header().Set("Content-Type", resp.ContentType)
 			}
 			w.WriteHeader(resp.StatusCode)
-			fmt.Fprintln(w, resp.Body)
+			if resp.IsFile {
+				fp, err := os.Open(resp.Body)
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer fp.Close()
+				io.Copy(w, fp)
+			} else {
+				fmt.Fprintln(w, resp.Body)
+			}
 			return
 		}
 	}
