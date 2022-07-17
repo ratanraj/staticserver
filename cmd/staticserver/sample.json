@@ -1,0 +1,10 @@
+{
+    "port": 8008,
+    "routes": {
+        "/": {
+            "status_code": 220,
+            "body": "Hello World!"
+        }
+    }
+}
+
